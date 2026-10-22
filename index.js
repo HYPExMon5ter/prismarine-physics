@@ -4,8 +4,24 @@ const math = require('./lib/math')
 const features = require('./lib/features')
 const attribute = require('./lib/attribute')
 
+// A feature applies from the first to the second major version of its `versions`, inclusive;
+// "latest" leaves the range open so new releases keep behaviour that has not changed.
 function makeSupportFeature (mcData) {
-  return feature => features.some(({ name, versions }) => name === feature && versions.includes(mcData.version.majorVersion))
+  const major = mcData.version.majorVersion
+  const supported = new Set(features
+    .filter(({ versions: [min, max] }) => compareMajor(major, min) >= 0 && (max === 'latest' || compareMajor(major, max) <= 0))
+    .map(({ name }) => name))
+  return feature => supported.has(feature)
+}
+
+function compareMajor (a, b) {
+  const x = a.split('.').map(Number)
+  const y = b.split('.').map(Number)
+  for (let i = 0; i < Math.max(x.length, y.length); i++) {
+    const difference = (x[i] ?? 0) - (y[i] ?? 0)
+    if (difference !== 0) return difference
+  }
+  return 0
 }
 
 function Physics (mcData, world) {
