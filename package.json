@@ -35,7 +35,7 @@
     "standard": "^17.0.0"
   },
   "dependencies": {
-    "minecraft-data": "https://github.com/HYPExMon5ter/node-minecraft-data/releases/download/java-26.3-data-5/minecraft-data-3.117.0.tgz",
+    "minecraft-data": "https://github.com/HYPExMon5ter/node-minecraft-data/releases/download/java-26.3-data-6/minecraft-data-3.117.0.tgz",
     "prismarine-nbt": "^2.0.0",
     "vec3": "^0.2.0"
   },
